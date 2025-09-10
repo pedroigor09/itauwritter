@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import Image from 'next/image';
 import { getAssetPath } from '@/utils/assets';
 
 interface PolaroidData {
@@ -53,21 +52,26 @@ export default function FloatingPolaroids({ progress = 0, currentSequence = 0 }:
   const finalScale = isLastSequence ? 1.2 : 1;
 
   useEffect(() => {
-    const newPolaroids: PolaroidData[] = Array.from({ length: 12 }, (_, index) => ({
-      id: index + 1,
-      image: getAssetPath(`img/itau${index + 1}.png`),
-      caption: polaroidTexts[index].caption,
-      x: Math.random() * 80 + 10, 
-      y: Math.random() * 80 + 10,
-      rotation: (Math.random() - 0.5) * 15, 
-      scale: Math.random() * 0.2 + 0.7,
-      floatOffsetY: Math.random() * Math.PI * 2,
-      floatOffsetX: Math.random() * Math.PI * 2,
-      floatSpeed: Math.random() * 0.008 + 0.005, 
-      rotationSpeed: (Math.random() - 0.5) * 0.05,
-      driftX: 0,
-      driftY: 0
-    }));
+    const newPolaroids: PolaroidData[] = Array.from({ length: 12 }, (_, index) => {
+      const imagePath = getAssetPath(`/img/itau${index + 1}.png`);
+      console.log(`Polaroid ${index + 1} image path:`, imagePath);
+      
+      return {
+        id: index + 1,
+        image: imagePath,
+        caption: polaroidTexts[index].caption,
+        x: Math.random() * 80 + 10, 
+        y: Math.random() * 80 + 10,
+        rotation: (Math.random() - 0.5) * 15, 
+        scale: Math.random() * 0.2 + 0.7,
+        floatOffsetY: Math.random() * Math.PI * 2,
+        floatOffsetX: Math.random() * Math.PI * 2,
+        floatSpeed: Math.random() * 0.008 + 0.005, 
+        rotationSpeed: (Math.random() - 0.5) * 0.05,
+        driftX: 0,
+        driftY: 0
+      };
+    });
 
     setPolaroids(newPolaroids);
     
