@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
+import { getAssetPath } from '@/utils/assets';
 
 interface PolaroidData {
   id: number;
@@ -54,7 +55,7 @@ export default function FloatingPolaroids({ progress = 0, currentSequence = 0 }:
   useEffect(() => {
     const newPolaroids: PolaroidData[] = Array.from({ length: 12 }, (_, index) => ({
       id: index + 1,
-      image: `/itauwritter/img/itau${index + 1}.png`,
+      image: getAssetPath(`img/itau${index + 1}.png`),
       caption: polaroidTexts[index].caption,
       x: Math.random() * 80 + 10, 
       y: Math.random() * 80 + 10,

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { getAssetPath } from '@/utils/assets';
 
 export default function BackgroundMusic() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -71,7 +72,7 @@ export default function BackgroundMusic() {
         onPause={() => setIsPlaying(false)}
         onCanPlayThrough={attemptPlay}
       >
-        <source src="/itauwritter/music.mp3" type="audio/mpeg" />
+        <source src={getAssetPath('/music.mp3')} type="audio/mpeg" />
       </audio>
 
       {!isPlaying && (
