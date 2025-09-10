@@ -55,7 +55,7 @@ export default function GrandFinale({ isActive }: GrandFinaleProps) {
         }`}
         style={{ zIndex: 9000 }}
       >
-        <div className="text-center px-4">
+        <div className="text-center px-4 py-8">
           <h1 
             className={`text-6xl md:text-8xl lg:text-9xl font-black mb-8 transition-all duration-3000 ease-out ${
               showBrightening 
@@ -67,7 +67,9 @@ export default function GrandFinale({ isActive }: GrandFinaleProps) {
                 ? '0 0 30px rgba(255, 165, 0, 0.5)' 
                 : '0 0 50px rgba(0, 0, 0, 0.8)',
               fontFamily: 'Inter, sans-serif',
-              letterSpacing: '0.05em'
+              letterSpacing: '0.05em',
+              lineHeight: '1.1',
+              overflow: 'visible'
             }}
           >
             VOCÊ É<br />RECOMEÇO
