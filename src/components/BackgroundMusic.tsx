@@ -71,7 +71,7 @@ export default function BackgroundMusic() {
         onPause={() => setIsPlaying(false)}
         onCanPlayThrough={attemptPlay}
       >
-        <source src="/music.mp3" type="audio/mpeg" />
+        <source src="/itauwritter/music.mp3" type="audio/mpeg" />
       </audio>
 
       {!isPlaying && (
