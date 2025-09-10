@@ -1,11 +1,12 @@
 'use client';
 
 import MessageSequence from '@/components/MessageSequence';
-import SequenceControls from '@/components/SequenceControls';
-import KeyboardHandler from '@/components/KeyboardHandler';
 import ParallaxBackground from '@/components/ParallaxBackground';
 import AnimatedBubbles from '@/components/AnimatedBubbles';
 import FloatingParticles from '@/components/FloatingParticles';
+import FloatingPolaroids from '@/components/FloatingPolaroids';
+import BackgroundMusic from '@/components/BackgroundMusic';
+import GrandFinale from '@/components/GrandFinale';
 import { useMessageSequence } from '@/hooks/useMessageSequence';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
@@ -15,6 +16,7 @@ export default function WelcomeExperience() {
     currentSequenceIndex,
     isSequencePlaying,
     showControls,
+    showGrandFinale,
     progress,
     totalSequences,
     handleSequenceComplete,
@@ -28,25 +30,16 @@ export default function WelcomeExperience() {
 
   return (
     <div className="relative min-h-screen flex flex-col overflow-hidden">
-      {/* Keyboard Navigation */}
-      <KeyboardHandler
-        onPrevious={handlePrevious}
-        onNext={handleNext}
-        disabled={isSequencePlaying}
-      />
 
-      {/* Enhanced Background with Parallax */}
       <ParallaxBackground progress={progress} />
       
-      {/* Animated 3D Bubbles - only if motion is not reduced */}
+      {!prefersReducedMotion && <FloatingPolaroids progress={progress} currentSequence={currentSequenceIndex} />}
+      
       {!prefersReducedMotion && <AnimatedBubbles progress={progress} />}
       
-      {/* Floating Particles - only if motion is not reduced */}
       {!prefersReducedMotion && <FloatingParticles progress={progress} count={25} />}
       
-      {/* Content Overlay */}
       <div className="relative z-10 flex flex-col min-h-screen">
-        {/* Main Content */}
         <div className="relative flex-1 flex items-center justify-center px-4 py-16 z-10">
           <div className="max-w-4xl mx-auto">
             <MessageSequence
@@ -57,34 +50,8 @@ export default function WelcomeExperience() {
             />
           </div>
         </div>
-
-        {/* Controls */}
-        {showControls && (
-          <div className="relative z-20">
-            <SequenceControls
-              currentSequence={currentSequenceIndex}
-              totalSequences={totalSequences}
-              onPrevious={handlePrevious}
-              onNext={handleNext}
-              onSequenceSelect={handleSequenceChange}
-              isPlaying={isSequencePlaying}
-            />
-          </div>
-        )}
-
-        {/* Instructions */}
-        {showControls && (
-          <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-20">
-            <div className="backdrop-blur-sm bg-white/10 rounded-full px-4 py-2 border border-white/20">
-              <p className="text-white/80 text-sm text-center font-light">
-                Use ← → ou os controles para navegar
-              </p>
-            </div>
-          </div>
-        )}
       </div>
 
-      {/* Floating Action Button for Restart */}
       <div className="fixed top-4 right-4 z-30">
         <button
           onClick={() => handleSequenceChange(0)}
@@ -97,6 +64,10 @@ export default function WelcomeExperience() {
           </svg>
         </button>
       </div>
+
+      <BackgroundMusic />
+
+      <GrandFinale isActive={showGrandFinale} />
     </div>
   );
 }

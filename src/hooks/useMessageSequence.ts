@@ -9,17 +9,37 @@ export function useMessageSequence() {
   const [isSequencePlaying, setIsSequencePlaying] = useState(false);
   const [showControls, setShowControls] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [showGrandFinale, setShowGrandFinale] = useState(false);
 
   const currentSequence = messageSequences[currentSequenceIndex];
 
   const handleSequenceComplete = useCallback(() => {
-    setIsSequencePlaying(false);
-    setShowControls(true);
-  }, []);
+    if (currentSequenceIndex < messageSequences.length - 1) {
+      setTimeout(() => {
+        const newIndex = currentSequenceIndex + 1;
+        setCurrentSequenceIndex(newIndex);
+        setCurrentMessageIndex(0);
+        setIsSequencePlaying(true);
+        setShowControls(false);
+        
+        const totalMessages = messageSequences.reduce((acc, seq) => acc + seq.messages.length, 0);
+        const completedMessages = messageSequences
+          .slice(0, newIndex)
+          .reduce((acc, seq) => acc + seq.messages.length, 0);
+        
+        setProgress(Math.min(completedMessages / totalMessages, 1));
+      }, 2000); 
+    } else {
+      setTimeout(() => {
+        setIsSequencePlaying(false);
+        setShowControls(true);
+        setShowGrandFinale(true);
+      }, 3000); 
+    }
+  }, [currentSequenceIndex]);
 
   const handleMessageProgress = useCallback((messageIndex: number) => {
     setCurrentMessageIndex(messageIndex);
-    // Calcular progresso diretamente aqui para evitar dependência circular
     const totalMessages = messageSequences.reduce((acc, seq) => acc + seq.messages.length, 0);
     const completedMessages = messageSequences
       .slice(0, currentSequenceIndex)
@@ -35,7 +55,6 @@ export function useMessageSequence() {
       setIsSequencePlaying(true);
       setShowControls(false);
       
-      // Recalcular progresso para nova sequência
       const totalMessages = messageSequences.reduce((acc, seq) => acc + seq.messages.length, 0);
       const completedMessages = messageSequences
         .slice(0, newIndex)
@@ -53,7 +72,6 @@ export function useMessageSequence() {
     handleSequenceChange(currentSequenceIndex + 1);
   }, [currentSequenceIndex, handleSequenceChange]);
 
-  // Initialize
   useEffect(() => {
     setIsSequencePlaying(true);
     setShowControls(false);
@@ -67,6 +85,7 @@ export function useMessageSequence() {
     currentMessageIndex,
     isSequencePlaying,
     showControls,
+    showGrandFinale,
     progress,
     totalSequences: messageSequences.length,
     handleSequenceComplete,

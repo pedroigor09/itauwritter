@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import ProcessedText from './ProcessedText';
 
 interface TypewriterEffectProps {
   text: string;
@@ -20,7 +21,6 @@ export default function TypewriterEffect({
   const [showCursorBlink, setShowCursorBlink] = useState(true);
   const [hasCompleted, setHasCompleted] = useState(false);
 
-  // Memoizar onComplete para evitar re-execuções
   const handleComplete = useCallback(() => {
     if (!hasCompleted) {
       setHasCompleted(true);
@@ -37,7 +37,6 @@ export default function TypewriterEffect({
 
       return () => clearTimeout(timeout);
     } else if (currentIndex === text.length && !hasCompleted) {
-      // Aguarda um pouco antes de chamar onComplete para evitar flickering
       const timeout = setTimeout(() => {
         handleComplete();
       }, 200);
@@ -46,7 +45,6 @@ export default function TypewriterEffect({
   }, [currentIndex, text, speed, handleComplete, hasCompleted]);
 
   useEffect(() => {
-    // Reset quando o texto muda
     setDisplayedText('');
     setCurrentIndex(0);
     setHasCompleted(false);
@@ -62,7 +60,7 @@ export default function TypewriterEffect({
 
   return (
     <span className="inline-block">
-      {displayedText}
+      <ProcessedText text={displayedText} />
       {showCursor && (
         <span 
           className={`inline-block w-0.5 h-6 md:h-7 lg:h-8 bg-white ml-1 transition-opacity duration-100 ${

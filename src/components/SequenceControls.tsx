@@ -24,7 +24,6 @@ export default function SequenceControls({
       <FadeTransition show={true} duration={300}>
         <div className="bg-white/20 backdrop-blur-md rounded-full px-6 py-4 shadow-2xl border border-white/30">
           <div className="flex items-center gap-4">
-            {/* Previous Button */}
             <button
               onClick={onPrevious}
               disabled={currentSequence === 0 || isPlaying}
@@ -36,7 +35,6 @@ export default function SequenceControls({
               </svg>
             </button>
 
-            {/* Sequence Indicators */}
             <div className="flex gap-3" role="tablist" aria-label="Sequências de mensagens">
               {Array.from({ length: totalSequences }, (_, index) => (
                 <button
@@ -55,7 +53,6 @@ export default function SequenceControls({
               ))}
             </div>
 
-            {/* Next Button */}
             <button
               onClick={onNext}
               disabled={currentSequence === totalSequences - 1 || isPlaying}

@@ -13,7 +13,7 @@ interface FloatingBubble {
 }
 
 interface AnimatedBubblesProps {
-  progress: number; // 0 to 1, how much of the sequence is complete
+  progress: number; 
 }
 
 export default function AnimatedBubbles({ progress }: AnimatedBubblesProps) {
@@ -36,7 +36,6 @@ export default function AnimatedBubbles({ progress }: AnimatedBubblesProps) {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Initialize bubbles
     const bubbleCount = Math.min(50, Math.floor(window.innerWidth / 30));
     bubblesRef.current = Array.from({ length: bubbleCount }, (_, i) => ({
       id: i,
@@ -51,22 +50,17 @@ export default function AnimatedBubbles({ progress }: AnimatedBubblesProps) {
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Update and draw bubbles
       bubblesRef.current.forEach((bubble) => {
-        // Update position
         bubble.x += Math.cos(bubble.direction) * bubble.speed;
         bubble.y += Math.sin(bubble.direction) * bubble.speed;
 
-        // Wrap around screen
         if (bubble.x > canvas.width + bubble.size) bubble.x = -bubble.size;
         if (bubble.x < -bubble.size) bubble.x = canvas.width + bubble.size;
         if (bubble.y > canvas.height + bubble.size) bubble.y = -bubble.size;
         if (bubble.y < -bubble.size) bubble.y = canvas.height + bubble.size;
 
-        // Calculate dynamic opacity based on progress
         const dynamicOpacity = bubble.opacity * (0.3 + progress * 0.7);
 
-        // Create gradient for 3D effect
         const gradient = ctx.createRadialGradient(
           bubble.x - bubble.size * 0.3,
           bubble.y - bubble.size * 0.3,
@@ -81,7 +75,6 @@ export default function AnimatedBubbles({ progress }: AnimatedBubblesProps) {
         gradient.addColorStop(0.7, `rgba(255, 180, 120, ${dynamicOpacity * 0.4})`);
         gradient.addColorStop(1, `rgba(255, 140, 80, ${dynamicOpacity * 0.2})`);
 
-        // Draw bubble with 3D effect
         ctx.save();
         ctx.globalAlpha = dynamicOpacity;
         ctx.beginPath();
@@ -89,7 +82,6 @@ export default function AnimatedBubbles({ progress }: AnimatedBubblesProps) {
         ctx.fillStyle = gradient;
         ctx.fill();
         
-        // Add subtle shadow for depth
         ctx.shadowColor = 'rgba(0, 0, 0, 0.1)';
         ctx.shadowBlur = bubble.size * 0.3;
         ctx.shadowOffsetX = bubble.size * 0.1;

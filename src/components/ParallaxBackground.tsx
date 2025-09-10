@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 interface ParallaxBackgroundProps {
-  progress: number; // 0 to 1
+  progress: number; 
   className?: string;
 }
 
@@ -20,15 +20,14 @@ export default function ParallaxBackground({ progress, className = '' }: Paralla
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Dynamic gradient based on progress
   const getGradientColors = () => {
     const orangeIntensity = Math.max(0.3, 1 - progress * 0.7);
     const lightness = 0.2 + progress * 0.3;
     
     return {
-      start: `hsl(25, 80%, ${lightness * 100}%)`, // Dark orange
-      middle: `hsl(30, 70%, ${(lightness + 0.1) * 100}%)`, // Medium orange
-      end: `hsl(40, 60%, ${(lightness + 0.3) * 100}%)`, // Light orange/cream
+      start: `hsl(25, 80%, ${lightness * 100}%)`,
+      middle: `hsl(30, 70%, ${(lightness + 0.1) * 100}%)`,
+      end: `hsl(40, 60%, ${(lightness + 0.3) * 100}%)`,
     };
   };
 
@@ -39,7 +38,6 @@ export default function ParallaxBackground({ progress, className = '' }: Paralla
       ref={containerRef}
       className={`absolute inset-0 overflow-hidden ${className}`}
     >
-      {/* Base gradient background */}
       <div 
         className="absolute inset-0"
         style={{
@@ -48,7 +46,6 @@ export default function ParallaxBackground({ progress, className = '' }: Paralla
         }}
       />
       
-      {/* Parallax layers */}
       <div 
         className="absolute inset-0 opacity-30"
         style={{
@@ -59,7 +56,6 @@ export default function ParallaxBackground({ progress, className = '' }: Paralla
         }}
       />
       
-      {/* Animated light rays */}
       <div 
         className="absolute inset-0 opacity-20"
         style={{
@@ -76,7 +72,6 @@ export default function ParallaxBackground({ progress, className = '' }: Paralla
         }}
       />
       
-      {/* Floating geometric shapes for depth */}
       <div 
         className="absolute inset-0 opacity-10"
         style={{
@@ -104,7 +99,6 @@ export default function ParallaxBackground({ progress, className = '' }: Paralla
         ))}
       </div>
 
-      {/* CSS animations for floating shapes */}
       <style jsx>{`
         @keyframes float-0 {
           0%, 100% { transform: translateY(0px) rotate(0deg); }

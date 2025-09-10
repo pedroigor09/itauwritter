@@ -14,15 +14,12 @@ export default function FloatingParticles({ count = 30, progress }: FloatingPart
     const container = containerRef.current;
     if (!container) return;
 
-    // Clear existing particles
     container.innerHTML = '';
 
-    // Create particles
     for (let i = 0; i < count; i++) {
       const particle = document.createElement('div');
       particle.className = 'absolute pointer-events-none';
       
-      // Random properties
       const size = Math.random() * 4 + 2;
       const x = Math.random() * 100;
       const y = Math.random() * 100;
@@ -45,7 +42,6 @@ export default function FloatingParticles({ count = 30, progress }: FloatingPart
       container.appendChild(particle);
     }
 
-    // Add CSS animation
     const style = document.createElement('style');
     style.textContent = `
       @keyframes float-particle {

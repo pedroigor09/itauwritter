@@ -22,22 +22,19 @@ export default function MessageSequence({
 
   const handleMessageComplete = () => {
     if (currentMessageIndex < messages.length - 1) {
-      // Aguarda mais tempo antes de fazer a transição
       setTimeout(() => {
         setIsVisible(false);
-        // Transição mais lenta para evitar flickering
         setTimeout(() => {
           const nextIndex = currentMessageIndex + 1;
           setCurrentMessageIndex(nextIndex);
           onMessageProgress?.(nextIndex);
           setIsVisible(true);
-        }, 800); // Aumentado de 500ms para 800ms
-      }, 3500); // Aumentado de 2000ms para 3500ms
+        }, 800);
+      }, 3500);
     } else {
-      // All messages completed
       setTimeout(() => {
         onSequenceComplete?.();
-      }, 4000); // Aumentado de 3000ms para 4000ms
+      }, 4000);
     }
   };
 
@@ -45,7 +42,7 @@ export default function MessageSequence({
     setCurrentMessageIndex(0);
     setIsVisible(true);
     onMessageProgress?.(0);
-  }, [messages]); // Removendo onMessageProgress das dependências
+  }, [messages]); 
 
   if (!messages.length) return null;
 
@@ -59,7 +56,7 @@ export default function MessageSequence({
         <p className="text-xl md:text-2xl lg:text-3xl leading-relaxed md:leading-relaxed lg:leading-relaxed text-white font-normal tracking-tight">
           <TypewriterEffect
             text={messages[currentMessageIndex].text}
-            speed={25} // Diminuindo um pouco a velocidade de digitação
+            speed={25} 
             onComplete={handleMessageComplete}
             showCursor={true}
           />

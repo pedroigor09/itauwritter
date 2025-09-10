@@ -11,11 +11,10 @@ export default function GlitchText({ children, className = '' }: GlitchTextProps
   const [isGlitching, setIsGlitching] = useState(false);
 
   useEffect(() => {
-    // Trigger glitch effect periodically
     const interval = setInterval(() => {
       setIsGlitching(true);
       setTimeout(() => setIsGlitching(false), 150);
-    }, 3000 + Math.random() * 2000); // Random interval between 3-5 seconds
+    }, 3000 + Math.random() * 2000); 
 
     return () => clearInterval(interval);
   }, []);
@@ -46,7 +45,6 @@ export default function GlitchText({ children, className = '' }: GlitchTextProps
     >
       {children}
       
-      {/* Glitch layers */}
       {isGlitching && (
         <>
           <span 
