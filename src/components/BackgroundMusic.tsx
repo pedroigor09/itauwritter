@@ -22,7 +22,15 @@ export default function BackgroundMusic() {
   };
 
   useEffect(() => {
-    attemptPlay();
+    // Tentativa inicial
+    const initialAttempt = setTimeout(() => {
+      attemptPlay();
+    }, 1000);
+
+    // Tentativas adicionais
+    const retryAttempts = [2000, 3000, 5000].map(delay => 
+      setTimeout(attemptPlay, delay)
+    );
 
     const handleUserInteraction = () => {
       if (!hasUserInteracted) {
@@ -31,14 +39,18 @@ export default function BackgroundMusic() {
       }
     };
 
-    document.addEventListener('click', handleUserInteraction);
-    document.addEventListener('keydown', handleUserInteraction);
-    document.addEventListener('touchstart', handleUserInteraction);
+    // Eventos de interação do usuário
+    const events = ['click', 'keydown', 'touchstart', 'scroll', 'mousemove'];
+    events.forEach(event => {
+      document.addEventListener(event, handleUserInteraction, { once: true });
+    });
 
     return () => {
-      document.removeEventListener('click', handleUserInteraction);
-      document.removeEventListener('keydown', handleUserInteraction);
-      document.removeEventListener('touchstart', handleUserInteraction);
+      clearTimeout(initialAttempt);
+      retryAttempts.forEach(clearTimeout);
+      events.forEach(event => {
+        document.removeEventListener(event, handleUserInteraction);
+      });
     };
   }, [hasUserInteracted]);
 
@@ -76,13 +88,13 @@ export default function BackgroundMusic() {
       </audio>
 
       {!isPlaying && (
-        <div className="fixed top-4 left-4 z-50">
+        <div className="fixed top-4 left-4 z-50 animate-pulse">
           <button
             onClick={attemptPlay}
-            className="bg-white/20 backdrop-blur-sm text-white px-3 py-2 rounded-full hover:bg-white/30 transition-all duration-300 text-xs"
-            title="Clique para ativar música de fundo"
+            className="bg-orange-500/80 backdrop-blur-sm text-white px-4 py-2 rounded-full hover:bg-orange-600/80 transition-all duration-300 text-sm font-medium shadow-lg"
+            title="Clique para ativar música de fundo relaxante"
           >
-            🎵 Ativar música
+            🎵 Música de Fundo
           </button>
         </div>
       )}

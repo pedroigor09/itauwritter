@@ -132,14 +132,14 @@ export default function FloatingPolaroids({ progress = 0, currentSequence = 0 }:
             }}
           >
             <div className="relative w-full h-28 bg-gradient-to-br from-orange-100 to-orange-200 rounded overflow-hidden mb-3">
-              <Image
+              <img
                 src={polaroid.image}
                 alt={`Relato ${polaroid.id}`}
-                fill
-                className="object-cover opacity-80"
+                className="absolute inset-0 w-full h-full object-cover opacity-80"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.style.display = 'none';
+                  console.log('Erro ao carregar imagem:', polaroid.image);
                 }}
               />
               <div 

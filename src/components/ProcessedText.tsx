@@ -22,6 +22,7 @@ const GLITCH_WORDS = [
   'VERDADE',
   'CORAÇÃO',
   'HISTÓRIA',
+  'HISTÓRIAS',
   'BATALHAS',
   'GENEROSA',
   'LONGE'
