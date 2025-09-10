@@ -153,7 +153,7 @@ export default function FloatingPolaroids({ progress = 0, currentSequence = 0 }:
             
             <div className="text-center">
               <p className="text-sm font-medium text-gray-800 leading-tight">
-                "{polaroid.caption}"
+                &ldquo;{polaroid.caption}&rdquo;
               </p>
             </div>
           </div>
