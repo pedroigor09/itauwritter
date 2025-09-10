@@ -48,7 +48,7 @@ export const messageSequences: Sequence[] = [
     messages: [
       {
         id: 1,
-        text: "É injusto quando a maioria paga pela minoria. É doloroso quando decisões são tomadas sem olhar para as HISTÓRIAS por trás de cada rosto. Mas NÃO se engane: o seu VALOR NÃO diminuiu. A sua entrega NÃO desapareceu. O que VOCÊ construiu, ninguém pode apagar."
+        text: "É injusto quando escolhas coletivas apagam méritos individuais.. É doloroso quando decisões são tomadas sem olhar para as HISTÓRIAS por trás de cada rosto. Mas NÃO se engane: o seu VALOR NÃO diminuiu. A sua entrega NÃO desapareceu. O que VOCÊ construiu, ninguém pode apagar."
       },
       {
         id: 2,
